@@ -37,3 +37,17 @@ func (mw loggingMiddleware) Uppercase(ctx context.Context, s string) (output str
 	output, err = mw.next.Uppercase(ctx, s)
 	return
 }
+
+func (mw loggingMiddleware) Test(ctx context.Context, s string) (output string, err error) {
+	defer func(begin time.Time) {
+		mw.logger.Log(
+			"method", "test",
+			"input", s,
+			"output", output,
+			"err", err,
+			"took", time.Since(begin),
+		)
+	}(time.Now())
+	output, err = mw.next.Test(ctx, s)
+	return
+}

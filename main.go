@@ -1,9 +1,9 @@
 package main
 
 import (
-	"api/app/stringtest"
 	"flag"
 	"fmt"
+	"go-kit-api/app/stringtest"
 	"net/http"
 	"os"
 	"os/signal"

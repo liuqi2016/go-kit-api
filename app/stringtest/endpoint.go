@@ -9,13 +9,19 @@ import (
 )
 
 type Endpoints struct {
+	TestEndpoint      endpoint.Endpoint
 	UppercaseEndpoint endpoint.Endpoint
-	CountEndpoint     endpoint.Endpoint
 }
 
 func MakeEndpoints(s Service) Endpoints {
 	return Endpoints{
+		TestEndpoint:      MakeTestEndpoint(s),
 		UppercaseEndpoint: MakeUppercaseEndpoint(s),
+	}
+}
+func MakeTestEndpoint(svc Service) endpoint.Endpoint {
+	return func(ctx context.Context, request interface{}) (interface{}, error) {
+		return request.(string), nil
 	}
 }
 

@@ -49,14 +49,22 @@ func MakeHTTPHandler(s Service, logger log.Logger) http.Handler {
 	// GET     /profiles/:id/addresses/:addressID  retrieve a particular profile address
 	// POST    /profiles/:id/addresses/            add a new address
 	// DELETE  /profiles/:id/addresses/:addressID  remove an address
-
-	r.Methods("POST").Path("/uppercase/").Handler(httptransport.NewServer(
+	r.Methods("GET").Path("/test").Handler(httptransport.NewServer(
+		e.TestEndpoint,
+		decodeTestRequest,
+		encodeResponse,
+		options...,
+	))
+	r.Methods("GET").Path("/uppercase").Handler(httptransport.NewServer(
 		e.UppercaseEndpoint,
 		decodeUppercaseRequest,
 		encodeResponse,
 		options...,
 	))
 	return r
+}
+func decodeTestRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
+	return r.Body, nil
 }
 
 func decodeUppercaseRequest(_ context.Context, r *http.Request) (request interface{}, err error) {

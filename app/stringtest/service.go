@@ -10,6 +10,7 @@ import (
 
 type Service interface {
 	Uppercase(context.Context, string) (string, error)
+	Test(context.Context, string) (string, error)
 }
 
 type stringService struct {
@@ -28,6 +29,9 @@ func (stringService) Uppercase(ctx context.Context, s string) (string, error) {
 		return "", ErrEmpty
 	}
 	return strings.ToUpper(s), nil
+}
+func (stringService) Test(ctx context.Context, s string) (string, error) {
+	return s, nil
 }
 
 var ErrEmpty = errors.New("Empty string")
